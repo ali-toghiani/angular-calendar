@@ -1,1 +1,16 @@
-<p>calendar works!</p>
+<div class="calendar-container">
+    <header class="calendar-header" role="banner">
+      <h1>Calendar</h1>
+      <app-action-bar aria-label="Calendar controls"/>
+    </header>
+  
+    <div class="calendar-content">
+      <aside class="calendar-sidebar" aria-label="Date selection">
+        <app-date-picker/>
+      </aside>
+  
+      <section class="calendar-main" aria-label="Calendar view">
+        <router-outlet/>
+      </section>
+    </div>
+</div>

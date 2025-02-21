@@ -1,0 +1,25 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.calendar-header {
+  width: 100%;
+}
+
+.calendar-content {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+}
+
+.calendar-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.calendar-main {
+  flex: 1;
+  min-width: 0;
+}
