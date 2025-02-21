@@ -1,16 +1,13 @@
-<div class="calendar-container">
-    <header class="calendar-header" role="banner">
-      <h1>Calendar</h1>
-      <app-action-bar aria-label="Calendar controls"/>
-    </header>
-  
-    <div class="calendar-content">
-      <aside class="calendar-sidebar" aria-label="Date selection">
-        <app-date-picker/>
-      </aside>
-  
-      <section class="calendar-main" aria-label="Calendar view">
-        <router-outlet/>
-      </section>
-    </div>
+<div class="calendar-container bg-widget">
+  <app-action-bar class="calendar-header"/>
+
+  <div class="calendar-content">
+    <aside class="calendar-sidebar mat-bg-primary-50">
+      <app-date-picker></app-date-picker>
+    </aside>
+
+    <section class="calendar-main bg-white">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
 </div>

@@ -10,7 +10,10 @@ export const calendarRoutes: Routes = [
     loadComponent: () => import('./calendar.component').then(c => c.CalendarComponent),
     children: [
       { path: '', redirectTo: CalendarRoutes.DAY, pathMatch: 'full' },
-      { path: CalendarRoutes.DAY, component: DayCalendarComponent },
+      { 
+        path: `${CalendarRoutes.DAY}/:year/:month/:day`,
+        component: DayCalendarComponent 
+      },
       { path: "**", redirectTo: CalendarRoutes.DAY }
     ]
   }
