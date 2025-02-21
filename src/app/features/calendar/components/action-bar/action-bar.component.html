@@ -1,1 +1,27 @@
-<p>action-bar works!</p>
+<header class="calendar-header">
+    <div class="header-utility">
+
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-icon svgIcon="calendar" class="calendar-icon"></mat-icon>
+
+        <div class="header-utility-text">Calendar</div>
+    </div>
+    <div class="header-navigation">
+        <button mat-stroked-button
+         class="header-navigation-button">
+         Today
+        </button>
+
+        <div class="navigation-arrow-container">
+            <mat-icon class="navigation-arrow">arrow_back_ios</mat-icon>
+            <mat-icon class="navigation-arrow">arrow_forward_ios</mat-icon>
+        </div>
+
+        <div class="date-display">
+            {{ date() | date:'MMMM d, yyyy' }}
+        </div>
+    </div>
+</header>
