@@ -1,1 +1,19 @@
-<p>day-calendar works!</p>
+<div class="outer-container">
+    <div class="calendar-day-view">
+        <div class="time-column">
+          @for (hour of hours; track hour) {
+            <div class="time-slot">
+              <span class="time-label">{{hour}}:00</span>
+            </div>
+          }
+        </div>
+        <div class="events-grid">
+          @for (hour of hours; track hour) {
+            <div class="hour-slot">
+              <div class="half-hour-slot"></div>
+              <div class="half-hour-slot"></div>
+            </div>
+          }
+        </div>
+    </div>
+</div>
