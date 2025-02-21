@@ -11,13 +11,20 @@
     </div>
     <div class="header-navigation">
         <button mat-stroked-button
-         class="header-navigation-button">
+         class="header-navigation-button"
+         (click)="goToToday()">
          Today
         </button>
 
         <div class="navigation-arrow-container">
-            <mat-icon class="navigation-arrow">arrow_back_ios</mat-icon>
-            <mat-icon class="navigation-arrow">arrow_forward_ios</mat-icon>
+            <button mat-icon-button (click)="goToPreviousDay()">
+                <mat-icon class="navigation-arrow">arrow_back_ios</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="goToNextDay()">
+                <mat-icon class="navigation-arrow">arrow_forward_ios</mat-icon>
+            </button>
+            
         </div>
 
         <div class="date-display">
