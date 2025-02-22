@@ -86,4 +86,15 @@ export class AppointmentService {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mappedStorage, null, 2));
     this.loadAppointments();
   }
+
+  updateAppointment(appointment: Appointment, dateId: string): void {
+    const storedItems = this.storedAppointments()
+    const targetDayAppointments = this.storedAppointments()[dateId];
+    if (targetDayAppointments) {
+      storedItems[dateId] = storedItems[dateId].map( item => item.id == appointment.id ? appointment : item);
+    }
+    const mappedStorage = this.mapAppointmentsToStorage(storedItems);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mappedStorage, null, 2));
+    this.loadAppointments();
+  }
 }

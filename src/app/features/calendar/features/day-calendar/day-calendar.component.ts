@@ -35,14 +35,7 @@ export class DayCalendarComponent implements OnInit {
   isVisibleCreateModal = false;
 
 
-  appointments: Appointment[] = [
-    {
-      id: "d68u4ii0aluxhanrvna7o",
-      title: "(No Title)",
-      start: new Date("2025-02-22T13:55:24.768Z"),
-      end: new Date("2025-02-22T14:55:24.768Z")
-    }
-  ];
+  appointments: Appointment[] = [];
 
   constructor(
     private appointmentService: AppointmentService,
@@ -124,6 +117,7 @@ export class DayCalendarComponent implements OnInit {
       calendarEvent.start = newStart;
       calendarEvent.end = new Date(newStart.getTime() + duration);
 
+      this.appointmentService.updateAppointment(calendarEvent, this.dateId);
       // Reset the transform
       event.source._dragRef.reset();
 
