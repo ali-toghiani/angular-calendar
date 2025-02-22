@@ -1,19 +1,42 @@
-<div class="outer-container">
-    <div class="calendar-day-view">
-        <div class="time-column">
-          @for (hour of hours; track hour) {
-            <div class="time-slot">
-              <span class="time-label">{{hour}}:00</span>
-            </div>
-          }
-        </div>
-        <div class="events-grid">
-          @for (hour of hours; track hour) {
-            <div class="hour-slot">
-              <div class="half-hour-slot"></div>
-              <div class="half-hour-slot"></div>
-            </div>
-          }
-        </div>
-    </div>
+<div class="calendar-day-view">
+
+  <div class="time-column">
+    @for (hour of hours; track hour) {
+      <div class="time-slot">
+        <span class="time-label">{{hour}}:00</span>
+      </div>
+    }
+  </div>
+
+  <div class="events-grid">
+    @for (hour of hours; track hour) {
+      <div class="hour-slot">
+        <div class="half-hour-slot" (click)="onHalfHourSlotClick(hour, false)"></div>
+        <div class="half-hour-slot" (click)="onHalfHourSlotClick(hour, true)"></div>
+      </div>
+    }
+
+    @for (event of appointments; track event.id) {
+      <div class="calendar-event"
+           cdkDrag
+           [cdkDragLockAxis]="'y'"
+           [cdkDragBoundary]="'.events-grid'"
+           [style]="calculateEventStyle(event)"
+           (cdkDragMoved)="onDragMoved($event, event)"
+           (cdkDragEnded)="onDragEnded($event, event)">
+        {{ event.title }}
+
+        <button class="delete-button" mat-icon-button (click)="deleteEvent(event.id)">
+          <mat-icon class="delete-icon">delete</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
 </div>
+
+@if(isVisibleCreateModal) {
+  <app-create-appointment-modal
+    [selectedDate]="selectedDate"
+    (closeModal)="closeModal()">
+  </app-create-appointment-modal>
+}
