@@ -24,6 +24,7 @@ $theme: mat.m2-define-light-theme((
 :root {
   --widget-bg: #f8fafd;        // Light gray background used in Google Calendar widgets
   --white-bg: #ffffff;
+  --gray-bg: #f0f4f9;
   --hover-bg: #f8f9fa;         // Hover state background
   --border-color: #dadce0;     // Border color used throughout
   --text-primary: #3c4043;     // Primary text color
@@ -61,5 +62,9 @@ $theme: mat.m2-define-light-theme((
 
   &-white {
     background-color: var(--white-bg);
+  }
+
+  &-gray {
+    background-color: var(--gray-bg);
   }
 }

@@ -20,7 +20,7 @@
     "baseUrl": "./src",
     "paths": {
       "@enums": ["./app/enums/index.ts"],
-      "@models": ["./app/enums/index.ts"],
+      "@models": ["./app/models/index.ts"],
       "@services": ["./app/services/index.ts"]
     }
   },

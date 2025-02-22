@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionBarComponent } from "./components/action-bar/action-bar.component";
-import { DatePickerComponent } from "./components/date-picker/date-picker.component";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet, Router } from '@angular/router';
-import { CalendarRoutes } from '@enums';
+
+import {DateService} from '@services';
+
+import { ActionBarComponent } from "./components/action-bar/action-bar.component";
+import { DatePickerComponent } from "./components/date-picker/date-picker.component";
+
 @Component({
   selector: 'app-calendar',
   imports: [
@@ -17,18 +20,17 @@ import { CalendarRoutes } from '@enums';
 })
 export class CalendarComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private dateService: DateService
+  ) {}
 
   ngOnInit(): void {
-
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    this.navigateToDate(year, month, day);
+    this.navigateToDate();
   }
 
-  navigateToDate(year: number, month: number, day: number) {
-    this.router.navigate(['/' , CalendarRoutes.CALENDAR, CalendarRoutes.DAY, year, month, day]);
+  navigateToDate() {
+    const calendarRoute = this.dateService.getNavigationRoute();
+    this.router.navigate(calendarRoute);
   }
 }

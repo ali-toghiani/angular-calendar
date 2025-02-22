@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import {CalendarRoutes} from '@enums';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DateService {
+
+  constructor() { }
+
+  getPreviousDay(date?: Date | null): Date {
+    if (!date) {
+      date = new Date();
+    }
+    const previousDay = new Date(date);
+    previousDay.setDate(previousDay.getDate() - 1);
+    return previousDay;
+  }
+
+  getNextDay(date?: Date | null): Date {
+    if (!date) {
+      date = new Date();
+    }
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return nextDay;
+  }
+
+  // Format Date to "yyyy-mm-dd"
+  getDateId(date: Date): string {
+    return date && date.toISOString().split('T')[0];
+  }
+
+  formatDateId(year: string, month: string, day: string): string {
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  }
+
+  getNavigationRoute(): (string|number)[]{
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    const day = date.getDate();
+    return ['/' , CalendarRoutes.CALENDAR, CalendarRoutes.DAY, year, month, day];
+  }
+}
