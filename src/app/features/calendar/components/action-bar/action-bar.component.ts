@@ -10,9 +10,9 @@ import { CalendarRoutes } from '@enums';
 @Component({
   selector: 'app-action-bar',
   imports: [
-    MatIconModule,
-     MatButtonModule,
-     CommonModule
+      MatIconModule,
+      MatButtonModule,
+      CommonModule
     ],
   templateUrl: './action-bar.component.html',
   styleUrl: './action-bar.component.scss'
