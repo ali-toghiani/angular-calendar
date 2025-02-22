@@ -1,0 +1,96 @@
+.dialog-container{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    background-color: white;
+    overflow: hidden;
+
+    .mat-mdc-form-field {
+        width: 100%;
+        font-size: 14px;
+        
+        input {
+          font-family: 'Google Sans', sans-serif;
+          &::placeholder {
+            color: #3c4043;
+            opacity: 1;
+          }
+        }
+      }
+
+      .appointment-form{
+        padding-inline: 20px;
+        padding-top: 20px;
+
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+
+        .indented-container{
+            margin-inline-start: 45px;
+        }
+
+        .appointment-icons{
+            font-size: 24px;
+            color: #444746;
+        }
+
+        .full-width-container{
+            display: flex;
+            align-items: center;
+            column-gap: 25px;
+
+        }
+
+        .save-button{
+            width: fit-content;
+            margin-inline-start: auto;
+        }
+      }
+}
+
+.dialog-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+::ng-deep {
+  .mat-mdc-form-field {
+    // Remove background and underline
+    .mdc-text-field {
+      background-color: transparent !important;
+      
+      &::before, &::after {
+        border-bottom: none !important;
+      }
+    }
+
+    // Remove the floating label background
+    .mdc-floating-label {
+      background-color: transparent;
+    }
+
+    // Optional: Style like Google Calendar
+    .mat-mdc-form-field-infix {
+      padding: 8px 0;
+      width: 100%;
+    }
+
+    // Remove ripple effect
+    .mat-ripple-element {
+      display: none;
+    }
+  }
+}
+
+// Add hover effect like Google Calendar
+.mat-mdc-form-field:hover {
+  background-color: var(--hover-bg, #f8f9fa);
+  border-radius: 4px;
+}
+
+// Optional: Add focus styles
+.mat-mdc-form-field.mat-focused {
+  background-color: var(--hover-bg, #f8f9fa);
+  border-radius: 4px;
+}

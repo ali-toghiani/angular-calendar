@@ -1,0 +1,55 @@
+
+<ng-template #Dialog>
+    <div class="dialog-container">
+        <div class="dialog-header bg-gray">
+            <button mat-icon-button>
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="closeDialog()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <form class="appointment-form" [formGroup]="appointmentForm">
+            <div class="indented-container">
+                <mat-form-field class="title-field" appearance="outline">
+                    <input type="text" 
+                          matInput
+                          formControlName="title"
+                          placeholder="Add title">
+                    <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                      <mat-error>Please enter a valid email address</mat-error>
+                    }
+                    @if (emailFormControl.hasError('required')) {
+                      <mat-error>Title is <strong>required</strong></mat-error>
+                    } -->
+                  </mat-form-field>
+                  <button mat-flat-button color="primary">Appointment</button>
+            </div>
+
+            <div class="full-width-container">
+                <mat-icon class="appointment-icons">schedule</mat-icon>
+
+                <div class="date-display">
+                    {{ appointmentForm.get('start')?.value | date:'MMMM d, yyyy hh:mm' }}
+                    -
+                    {{ appointmentForm.get('end')?.value | date:'hh:mm' }}
+                </div>
+            </div>
+
+            <div class="full-width-container">
+                <mat-icon class="appointment-icons">description</mat-icon>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <input type="text" 
+                            matInput
+                            formControlName="description"
+                            placeholder="add description or attachments">
+                </mat-form-field>
+            </div>
+
+            <button mat-flat-button color="primary" (click)="submitForm()" class="save-button">Save</button>
+          </form>
+    </div>
+</ng-template>
