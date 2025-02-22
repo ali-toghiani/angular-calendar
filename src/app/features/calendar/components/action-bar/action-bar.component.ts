@@ -36,22 +36,22 @@ export class ActionBarComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.firstChild?.params.subscribe(params => {
-      this.date.set(new Date(+params['year'], +params['month'], +params['day']));
+      this.date.set(new Date(+params['year'], +params['month'] - 1, +params['day']));
     });
   }
 
   goToPreviousDay() {
     const previousDay = this.dateService.getPreviousDay(this.date());
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, previousDay.getFullYear(), previousDay.getMonth(), previousDay.getDate()]);
+    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, previousDay.getFullYear(), (previousDay.getMonth() + 1), previousDay.getDate()]);
   }
-  
+
   goToToday() {
     const today = new Date();
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, today.getFullYear(), today.getMonth(), today.getDate()]);
+    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, today.getFullYear(), today.getMonth() + 1, today.getDate()]);
   }
 
   goToNextDay() {
     const nextDay = this.dateService.getNextDay(this.date());
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, nextDay.getFullYear(), nextDay.getMonth(), nextDay.getDate()]);
+    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, nextDay.getFullYear(), (nextDay.getMonth() +1), nextDay.getDate()]);
   }
 }
