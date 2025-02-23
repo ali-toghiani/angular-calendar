@@ -1,4 +1,4 @@
-import { Component, effect, Input, Output, ViewChild, TemplateRef, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, ViewChild, TemplateRef, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

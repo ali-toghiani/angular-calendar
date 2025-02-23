@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {CalendarRoutes} from '@enums';
+
+import { CalendarRoutes } from '@enums';
 
 @Injectable({
   providedIn: 'root'

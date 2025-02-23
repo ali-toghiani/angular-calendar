@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { RouterOutlet, Router } from '@angular/router';
 
-import {DateService} from '@services';
+import { DateService } from '@services';
 
 import { ActionBarComponent } from "./components/action-bar/action-bar.component";
 import { DatePickerComponent } from "./components/date-picker/date-picker.component";

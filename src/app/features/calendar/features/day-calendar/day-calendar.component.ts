@@ -1,14 +1,17 @@
-import { Component, computed, effect, OnInit, Signal, DestroyRef } from '@angular/core';
+import { Component, effect, OnInit, DestroyRef } from '@angular/core';
 import { CdkDragEnd, CdkDragMove, DragDropModule } from '@angular/cdk/drag-drop';
-import { CreateAppointmentModalComponent } from "../../components/create-appointment-modal/create-appointment-modal.component";
-import { AppointmentService, DateService } from '@services';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Appointment } from '@models';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { map } from 'rxjs/operators';
+
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs/operators';
+
+import { Appointment } from '@models';
+import { AppointmentService, DateService } from '@services';
+import { CreateAppointmentModalComponent } from "../../components/create-appointment-modal/create-appointment-modal.component";
 
 interface CalendarEvent {
   id: string;

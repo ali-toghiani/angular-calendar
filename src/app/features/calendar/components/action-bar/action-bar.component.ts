@@ -1,11 +1,12 @@
-import { Component, model, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
-import { DomSanitizer } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+
 import { DateService } from '@services';
-import { CalendarRoutes } from '@enums';
 
 @Component({
   selector: 'app-action-bar',
@@ -19,7 +20,7 @@ import { CalendarRoutes } from '@enums';
 })
 export class ActionBarComponent implements OnInit{
 
-  date = model<Date | null>(null);
+  date = signal<Date | null>(null);
 
   constructor(
     private matIconRegistry: MatIconRegistry,
