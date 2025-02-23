@@ -1,15 +1,26 @@
-import {AfterViewInit, Component, effect, inject, input, Input, OnInit, output, TemplateRef, ViewChild} from '@angular/core';
-import {Dialog, DialogRef, DIALOG_DATA, DialogModule} from '@angular/cdk/dialog';
+import { Component, effect, Input, Output, ViewChild, TemplateRef, EventEmitter } from '@angular/core';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
-import { AppointmentService } from 'app/services/appointment.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { AppointmentService } from '@services';
 import { Appointment } from '@models';
+
+type AppointmentFormControls = {
+  title: FormControl<string>;
+  start: FormControl<Date>;
+  end: FormControl<Date>;
+  description: FormControl<string>;
+}
+
 @Component({
   selector: 'app-create-appointment-modal',
+  standalone: true,
   imports: [
     CommonModule,
     MatIconModule,
@@ -22,75 +33,125 @@ import { Appointment } from '@models';
   templateUrl: './create-appointment-modal.component.html',
   styleUrl: './create-appointment-modal.component.scss'
 })
-export class CreateAppointmentModalComponent implements AfterViewInit{
-  selectedDate = input<Date>(new Date());
-  closeModal = output<void>();
-  @ViewChild('Dialog') dialogRef: TemplateRef<unknown> | undefined;
+export class CreateAppointmentModalComponent {
+  @Input() selectedDate: Date = new Date();
+  @Output() closeModalEvent = new EventEmitter<void>();
 
-  readonly DEFAULT_TITLE = '(No Title)';
-  dialog = inject(Dialog);
+  @ViewChild('Dialog') dialogRef!: TemplateRef<unknown>;
+  
+  private readonly DEFAULT_TITLE = '(No Title)';
+  private readonly DIALOG_CONFIG = {
+    width: '450px',
+    height: '400px',
+    panelClass: 'appointment-dialog'
+  };
+  
+  private dialogInstance?: DialogRef;
 
-  appointmentForm = new FormGroup({
-    title: new FormControl<string>('', {validators: []}),
-    start: new FormControl<Date>(this.selectedDate(), {validators: [Validators.required]}),
-    end: new FormControl<Date>(this.getEndTime(), {validators: [Validators.required]}),
-    description: new FormControl<string>('', {validators: []}),
-  })
+  appointmentForm = new FormGroup<AppointmentFormControls>({
+    title: new FormControl('', { nonNullable: true }),
+    start: new FormControl(this.selectedDate, {
+      validators: [Validators.required],
+      nonNullable: true
+    }),
+    end: new FormControl(this.getEndTime(), {
+      validators: [Validators.required],
+      nonNullable: true
+    }),
+    description: new FormControl('', { nonNullable: true })
+  });
 
-  constructor(private appointmentService: AppointmentService) {
+  constructor(
+    private dialog: Dialog,
+    private appointmentService: AppointmentService
+  ) {
     effect(() => {
-      this.appointmentForm.controls.start.setValue(this.selectedDate());
-      this.appointmentForm.controls.end.setValue(this.getEndTime());
+      this.updateFormDates();
     });
+  }
+
+  private updateFormDates(): void {
+    this.appointmentForm.patchValue({
+      start: this.selectedDate,
+      end: this.getEndTime()
+    });
+  }
+
+  private getEndTime(): Date {
+    const end = new Date(this.selectedDate);
+    end.setHours(end.getHours() + 1);
+    return end;
   }
 
   ngAfterViewInit(): void {
     this.openDialog();
   }
 
-  getEndTime(): Date {
-    const end = new Date(this.selectedDate());
-    end.setHours(end.getHours() + 1);
-    return end;
-  }
-
   openDialog(): void {
-    if (this.dialogRef === undefined) return;
-    const dialogRef = this.dialog.open<string>(this.dialogRef, {
-      width: '450px',
-      height: '400px',
-      panelClass: 'appointment-dialog',
-      data: {name: 'this.name'},
+    if (!this.dialogRef) return;
+
+    this.dialogInstance = this.dialog.open(this.dialogRef, {
+      ...this.DIALOG_CONFIG,
+      data: { name: 'this.name' }
     });
 
-    dialogRef.closed.subscribe(result => {
-      console.log('The dialog was closed');
+    this.dialogInstance.closed.subscribe(() => {
+      this.handleDialogClose();
+    });
+  }
+
+  private handleDialogClose(): void {
+    this.resetForm();
+  }
+
+  private resetForm(): void {
+    this.appointmentForm.reset({
+      title: '',
+      start: this.selectedDate,
+      end: this.getEndTime(),
+      description: ''
     });
   }
 
   closeDialog(): void {
     this.dialog.closeAll();
-    this.closeModal.emit();
+    this.closeModalEvent.emit();
   }
 
   submitForm(): void {
-    const {value} = this.appointmentForm;
-    const appointment: Appointment = {
-      id: this.generateId(),
-      title: value.title || this.DEFAULT_TITLE,
-      start: value.start || new Date(),
-      end: value.end || new Date(),
+    if (this.appointmentForm.invalid) {
+      this.markFormTouched();
+      return;
     }
 
     try {
+      const appointment = this.createAppointmentFromForm();
       this.appointmentService.storeAppointment(appointment);
       this.closeDialog();
     } catch (error) {
-      console.error('Error adding appointment:', error);
+      console.error('Error submitting appointment form:', error);
     }
   }
 
+  private markFormTouched(): void {
+    Object.values(this.appointmentForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  private createAppointmentFromForm(): Appointment {
+    const formValue = this.appointmentForm.getRawValue();
+    return {
+      id: this.generateId(),
+      title: formValue.title || this.DEFAULT_TITLE,
+      start: formValue.start,
+      end: formValue.end,
+      description: formValue.description
+    };
+  }
+
   private generateId(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return Math.random().toString(36).substring(2, 15) + 
+           Math.random().toString(36).substring(2, 15);
   }
 }
