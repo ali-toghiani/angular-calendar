@@ -41,17 +41,14 @@ export class ActionBarComponent implements OnInit{
   }
 
   goToPreviousDay() {
-    const previousDay = this.dateService.getPreviousDay(this.date());
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, previousDay.getFullYear(), (previousDay.getMonth() + 1), previousDay.getDate()]);
+    this.router.navigate(this.dateService.getPreviousDayRoute(this.date()!));
   }
 
   goToToday() {
-    const today = new Date();
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, today.getFullYear(), today.getMonth() + 1, today.getDate()]);
+    this.router.navigate(this.dateService.getTodayNavigationRoute());
   }
 
   goToNextDay() {
-    const nextDay = this.dateService.getNextDay(this.date());
-    this.router.navigate(['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, nextDay.getFullYear(), (nextDay.getMonth() +1), nextDay.getDate()]);
+    this.router.navigate(this.dateService.getNextDayRoute(this.date()!));
   }
 }

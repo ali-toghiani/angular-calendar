@@ -35,11 +35,22 @@ export class DateService {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
   }
 
-  getNavigationRoute(): (string|number)[]{
-    const date = new Date();
+  getNavigationRoute(date: Date): (string|number)[] {
     const year = date.getFullYear();
-    const month = date.getMonth()+1;
+    const month = date.getMonth() + 1;
     const day = date.getDate();
-    return ['/' , CalendarRoutes.CALENDAR, CalendarRoutes.DAY, year, month, day];
+    return ['/', CalendarRoutes.CALENDAR, CalendarRoutes.DAY, year, month, day];
+  }
+
+  getTodayNavigationRoute(): (string|number)[] {
+    return this.getNavigationRoute(new Date());
+  }
+
+  getPreviousDayRoute(date: Date): (string|number)[] {
+    return this.getNavigationRoute(this.getPreviousDay(date));
+  }
+
+  getNextDayRoute(date: Date): (string|number)[] {
+    return this.getNavigationRoute(this.getNextDay(date));
   }
 }
