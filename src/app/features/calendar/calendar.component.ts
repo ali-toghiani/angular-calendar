@@ -30,7 +30,7 @@ export class CalendarComponent implements OnInit {
   }
 
   navigateToDate() {
-    const calendarRoute = this.dateService.getNavigationRoute();
+    const calendarRoute = this.dateService.getNavigationRoute(new Date());
     this.router.navigate(calendarRoute);
   }
 }
