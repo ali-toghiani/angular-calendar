@@ -11,17 +11,24 @@ export function timeSlotConflictValidator(existingAppointments: Appointment[]): 
       return null;
     }
 
-    const hasConflict = existingAppointments.some(appointment => {
-      const appointmentStart = appointment.start;
-      const appointmentEnd = appointment.end;
+    if (end <= start) {
+      return { invalidTimeRange: true };
+    }
 
-      const isOverlapping = (
-        (start >= appointmentStart && start < appointmentEnd) ||
-        (end > appointmentStart && end <= appointmentEnd) ||
-        (start <= appointmentStart && end >= appointmentEnd)
-      );
+    // Check for overlaps with existing appointments
+    const hasConflict = existingAppointments.some(existing => {
+      // Convert everything to minutes since midnight for easier comparison
+      const newStart = start.getHours() * 60 + start.getMinutes();
+      const newEnd = end.getHours() * 60 + end.getMinutes();
+      const existingStart = existing.start.getHours() * 60 + existing.start.getMinutes();
+      const existingEnd = existing.end.getHours() * 60 + existing.end.getMinutes();
 
-      return isOverlapping;
+      // Check all possible overlap scenarios
+      const startsInExisting = newStart >= existingStart && newStart < existingEnd;
+      const endsInExisting = newEnd > existingStart && newEnd <= existingEnd;
+      const encompassesExisting = newStart <= existingStart && newEnd >= existingEnd;
+
+      return startsInExisting || endsInExisting || encompassesExisting;
     });
 
     return hasConflict ? { timeSlotConflict: true } : null;
