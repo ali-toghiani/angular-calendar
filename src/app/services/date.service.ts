@@ -28,6 +28,7 @@ export class DateService {
   }
 
   // Format Date to "yyyy-mm-dd"
+  // This id is used as the key to store the date in the local storage
   getDateId(date: Date): string {
     if (!date) return '';
     const year = date.getFullYear();

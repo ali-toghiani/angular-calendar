@@ -23,10 +23,10 @@ export class AppointmentService {
       const mappedDto = this.mapStorageToAppointments(parsedDto);
       this.storedAppointments.set(mappedDto);
     } catch (error) {
-      // TODO: calll LogService
+      // Behold Error Handling of the highest orda 
       console.error('Error loading appointments', error);
 
-      // optional: clear local storage
+      // optional: clear local storage,
       this.storedAppointments.set({});
     }
   }
@@ -41,10 +41,13 @@ export class AppointmentService {
 
       if (targetDayAppointments) {
         if (this.isAppointmentDuplicate(appointment, targetDayAppointments)) {
+          // If event is duplicate, ignore it
           return;
         }
+        // If day has appointments, add new appointment to the day
         storedItems[dayId] = [...targetDayAppointments, appointment];
       } else {
+        // If day has no appointments, create a new day with the appointment
         storedItems[dayId] = [appointment];
       }
 
@@ -77,11 +80,12 @@ export class AppointmentService {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mappedStorage, null, 2));
       this.loadAppointments();
     } catch (error) {
-      // TODO: calll LogService
+      // TODO: Implement proper error handling with LogService
       console.error('Error saving appointments', error);
     }
   }
 
+  // Dates must be formatted to ISO strings (to preveserve timezone) before storing in local storage
   private mapStorageToAppointments(
     data: Record<string, AppointmentDTO[]>
   ): Record<string, Appointment[]> {
@@ -129,6 +133,7 @@ export class AppointmentService {
     }
   }
 
+  // this checks if the appointment is a duplicate of an existing appointment in the day
   private isAppointmentDuplicate(appointment: Appointment, current: Appointment[]): boolean {
     return current.some(item => 
       item.start.getTime() === appointment.start.getTime() && 
@@ -136,3 +141,4 @@ export class AppointmentService {
     );
   }
 }
+
