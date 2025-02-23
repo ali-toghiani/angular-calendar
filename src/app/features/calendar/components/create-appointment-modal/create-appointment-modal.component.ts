@@ -175,6 +175,7 @@ export class CreateAppointmentModalComponent implements OnInit {
   }
 
   get endTimeError(): boolean {
-    return this.appointmentForm.errors?.['matTimepickerMin'] || false;
+    return this.appointmentForm.get('end')?.errors?.['matTimepickerMin'] || false;
   }
 }
+
