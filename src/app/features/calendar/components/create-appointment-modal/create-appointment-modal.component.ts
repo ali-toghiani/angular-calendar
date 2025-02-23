@@ -1,4 +1,4 @@
-import { Component, effect, Input, Output, ViewChild, TemplateRef, EventEmitter } from '@angular/core';
+import { Component, effect, Input, Output, ViewChild, TemplateRef, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -7,9 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
-import { AppointmentService } from '@services';
+import { AppointmentService, DateService } from '@services';
 import { Appointment } from '@models';
+import { timeSlotConflictValidator } from './validators/appointment.validators';
 
 type AppointmentFormControls = {
   title: FormControl<string>;
@@ -28,12 +30,13 @@ type AppointmentFormControls = {
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTimepickerModule
   ],
   templateUrl: './create-appointment-modal.component.html',
   styleUrl: './create-appointment-modal.component.scss'
 })
-export class CreateAppointmentModalComponent {
+export class CreateAppointmentModalComponent implements OnInit {
   @Input() selectedDate: Date = new Date();
   @Output() closeModalEvent = new EventEmitter<void>();
 
@@ -42,7 +45,7 @@ export class CreateAppointmentModalComponent {
   private readonly DEFAULT_TITLE = '(No Title)';
   private readonly DIALOG_CONFIG = {
     width: '450px',
-    height: '400px',
+    height: '500px',
     panelClass: 'appointment-dialog'
   };
   
@@ -63,11 +66,13 @@ export class CreateAppointmentModalComponent {
 
   constructor(
     private dialog: Dialog,
-    private appointmentService: AppointmentService
-  ) {
-    effect(() => {
-      this.updateFormDates();
-    });
+    private appointmentService: AppointmentService,
+    private dateService: DateService
+  ) {}
+
+  ngOnInit(): void {
+    this.updateFormDates();
+    this.setupTimeSlotValidator();
   }
 
   private updateFormDates(): void {
@@ -152,5 +157,24 @@ export class CreateAppointmentModalComponent {
   private generateId(): string {
     return Math.random().toString(36).substring(2, 15) + 
            Math.random().toString(36).substring(2, 15);
+  }
+
+  private setupTimeSlotValidator(): void {
+    const currentAppointments = this.getCurrentDayAppointments();
+    this.appointmentForm.addValidators(timeSlotConflictValidator(currentAppointments));
+    this.appointmentForm.updateValueAndValidity();
+  }
+
+  private getCurrentDayAppointments(): Appointment[] {
+    const dayId = this.dateService.getDateId(this.selectedDate);
+    return this.appointmentService.storedAppointments()[dayId] || [];
+  }
+
+  get timeSlotError(): boolean {
+    return this.appointmentForm.errors?.['timeSlotConflict'] || false;
+  }
+
+  get endTimeError(): boolean {
+    return this.appointmentForm.errors?.['matTimepickerMin'] || false;
   }
 }
