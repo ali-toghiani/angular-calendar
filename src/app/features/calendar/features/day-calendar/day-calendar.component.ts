@@ -81,6 +81,32 @@ export class DayCalendarComponent implements OnInit {
     return date.getHours() * 60 + date.getMinutes();
   }
 
+  private isOverlapping(event1: CalendarEvent, event2: CalendarEvent): boolean {
+    const start1 = this.getMinutesSinceMidnight(event1.start);
+    const end1 = this.getMinutesSinceMidnight(event1.end);
+    const start2 = this.getMinutesSinceMidnight(event2.start);
+    const end2 = this.getMinutesSinceMidnight(event2.end);
+    
+    return start1 < end2 && end1 > start2;
+  }
+
+  private wouldOverlapWithOthers(event: CalendarEvent, newStartMinutes: number): boolean {
+    const duration = event.end.getTime() - event.start.getTime();
+    const tempStart = new Date(this.selectedDate);
+    tempStart.setHours(Math.floor(newStartMinutes / 60), newStartMinutes % 60, 0);
+    const tempEnd = new Date(tempStart.getTime() + duration);
+    
+    const tempEvent: CalendarEvent = {
+      ...event,
+      start: tempStart,
+      end: tempEnd
+    };
+
+    return this.appointments.some(otherEvent => 
+      otherEvent.id !== event.id && this.isOverlapping(tempEvent, otherEvent)
+    );
+  }
+
   private calculateNewStartMinutes(yOffset: number, originalTop: number): number {
     const newTop = originalTop + yOffset;
     return Math.round(newTop / (this.PIXELS_PER_MINUTE * this.MINUTES_PER_STEP))
@@ -105,8 +131,13 @@ export class DayCalendarComponent implements OnInit {
     if (yOffset !== null) {
       const originalTop = parseInt(element.style.top, 10);
       const newStartMinutes = this.calculateNewStartMinutes(yOffset, originalTop);
-      const constrainedTop = this.constrainToCalendarBounds(newStartMinutes);
       
+      // Check for collisions
+      if (this.wouldOverlapWithOthers(calendarEvent, newStartMinutes)) {
+        return; // Prevent the drag if it would cause overlap
+      }
+      
+      const constrainedTop = this.constrainToCalendarBounds(newStartMinutes);
       element.style.transform = `translate3d(0px, ${constrainedTop - originalTop}px, 0px)`;
     }
   }
@@ -118,6 +149,13 @@ export class DayCalendarComponent implements OnInit {
     if (yOffset !== null) {
       const originalTop = parseInt(element.style.top, 10);
       const newStartMinutes = this.calculateNewStartMinutes(yOffset, originalTop);
+      
+      // Check for collisions before applying the change
+      if (this.wouldOverlapWithOthers(calendarEvent, newStartMinutes)) {
+        // Reset to original position if there would be a collision
+        event.source._dragRef.reset();
+        return;
+      }
       
       // Update event times
       const duration = calendarEvent.end.getTime() - calendarEvent.start.getTime();
