@@ -24,7 +24,12 @@
            [style]="calculateEventStyle(event)"
            (cdkDragMoved)="onDragMoved($event, event)"
            (cdkDragEnded)="onDragEnded($event, event)">
-        {{ event.title }}
+        <div class="event-details">
+          <div class="event-title">{{ event.title }}</div>
+          <div class="event-time">
+            {{ event.start | date:'HH:mm' }} - {{ event.end | date:'HH:mm' }}
+          </div>
+        </div>
 
         <button class="delete-button" mat-icon-button (click)="deleteEvent(event.id)">
           <mat-icon class="delete-icon">delete</mat-icon>
