@@ -91,8 +91,7 @@ export class CreateAppointmentModalComponent {
     if (!this.dialogRef) return;
 
     this.dialogInstance = this.dialog.open(this.dialogRef, {
-      ...this.DIALOG_CONFIG,
-      data: { name: 'this.name' }
+      ...this.DIALOG_CONFIG
     });
 
     this.dialogInstance.closed.subscribe(() => {
