@@ -1,4 +1,5 @@
 # Google Calendar Angular Clone
+![payever-calendar](https://github.com/user-attachments/assets/c0e4bd33-c798-4f77-964a-3f608e84d893)
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
