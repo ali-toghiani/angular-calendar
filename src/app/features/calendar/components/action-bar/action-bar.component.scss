@@ -1,0 +1,40 @@
+.calendar-header {
+  display: flex;
+  height: 64px;
+  padding-inline: 14px;
+
+  .header-utility {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+
+    .calendar-icon {
+      width: 44px;
+      height: 40px;
+    }
+
+    .header-utility-text {
+      font-size: 16px;
+      color: #000;
+    }
+  }
+  .header-navigation {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    .header-navigation-button {
+      border-radius: 100px;
+      font-weight: 200;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .navigation-arrow {
+      font-size: 14px;
+      height: 12px;
+    }
+  }
+}

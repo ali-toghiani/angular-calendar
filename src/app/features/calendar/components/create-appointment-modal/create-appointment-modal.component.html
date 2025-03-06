@@ -1,0 +1,77 @@
+
+<ng-template #Dialog>
+    <div class="dialog-container">
+        <div class="dialog-header bg-gray">
+            <button mat-icon-button>
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="closeDialog()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <form class="appointment-form" [formGroup]="appointmentForm">
+            <div class="indented-container">
+                <mat-form-field class="title-field" appearance="outline">
+                    <input type="text" 
+                          matInput
+                          formControlName="title"
+                          placeholder="Add title">
+                  </mat-form-field>
+                  <button mat-flat-button color="primary">Appointment</button>
+            </div>
+
+            <div class="full-width-container">
+                <mat-icon class="appointment-icons">schedule</mat-icon>
+
+                <div class="date-display">
+
+                    <mat-form-field class="time-field" appearance="outline">
+                        <mat-label>Start</mat-label>
+                        <input matInput formControlName="start" [matTimepicker]="start">
+                        <mat-timepicker-toggle matIconSuffix [for]="start"/>
+                        <mat-timepicker #start interval="15min"/>
+                      </mat-form-field>
+                    -
+                    <mat-form-field class="time-field" appearance="outline">
+                        <mat-label>End</mat-label>
+                        <input matInput 
+                               formControlName="end" 
+                               [matTimepicker]="end"
+                               [matTimepickerMin]="appointmentForm.get('start')?.value">
+                        <mat-timepicker-toggle matIconSuffix [for]="end"/>
+                        <mat-timepicker #end interval="15min"/>
+                      </mat-form-field>
+
+                      <mat-error *ngIf="timeSlotError">
+                        This time slot conflicts with an existing appointment
+                      </mat-error>
+
+                      <mat-error *ngIf="endTimeError">
+                        End time must be after start time
+                      </mat-error>
+                </div>
+            </div>
+
+            <div class="full-width-container">
+                <mat-icon class="appointment-icons">description</mat-icon>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <input type="text" 
+                            matInput
+                            formControlName="description"
+                            placeholder="add description or attachments">
+                </mat-form-field>
+            </div>
+
+            <button class="save-button"
+                    mat-flat-button
+                    color="primary"
+                    [disabled]="appointmentForm.invalid"
+                    (click)="submitForm()" >
+               Save
+            </button>
+          </form>
+    </div>
+</ng-template>

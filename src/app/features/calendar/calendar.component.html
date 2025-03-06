@@ -1,0 +1,13 @@
+<div class="calendar-container bg-widget">
+  <app-action-bar class="calendar-header"/>
+
+  <div class="calendar-content">
+    <aside class="calendar-sidebar mat-bg-primary-50">
+      <app-date-picker></app-date-picker>
+    </aside>
+
+    <section class="calendar-main bg-white">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
+</div>

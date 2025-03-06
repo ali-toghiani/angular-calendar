@@ -1,0 +1,64 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Google Calendar colors
+$primary: mat.m2-define-palette(mat.$m2-blue-palette, 700); // #1a73e8 - Google's primary blue
+$accent: mat.m2-define-palette(mat.$m2-cyan-palette);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$theme: mat.m2-define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  )
+));
+
+@include mat.all-component-themes($theme);
+
+:root {
+  --widget-bg: #f8fafd;        // Light gray background used in Google Calendar widgets
+  --white-bg: #ffffff;
+  --gray-bg: #f0f4f9;
+  --hover-bg: #f8f9fa;         // Hover state background
+  --border-color: #dadce0;     // Border color used throughout
+  --text-primary: #3c4043;     // Primary text color
+  --text-secondary: #5f6368;   // Secondary text color
+  --event-blue: #4285f4;       // Default event blue
+  --event-green: #0b8043;      // Green events
+  --event-red: #d50000;        // Red events
+  --event-yellow: #f4b400;     // Yellow events
+}
+
+.mat-bg {
+  &-primary {
+    background-color: mat.m2-get-color-from-palette($primary, 500);
+    &-lighter { background-color: mat.m2-get-color-from-palette($primary, 50); }
+    &-light { background-color: mat.m2-get-color-from-palette($primary, 100); }
+  }
+
+  &-accent {
+    background-color: mat.m2-get-color-from-palette($accent, 500);
+    &-lighter { background-color: mat.m2-get-color-from-palette($accent, 50); }
+    &-light { background-color: mat.m2-get-color-from-palette($accent, 100); }
+  }
+}
+
+.bg {
+  &-widget {
+    background-color: var(--widget-bg);
+  }
+  
+  &-hover {
+    background-color: var(--hover-bg);
+  }
+
+  &-white {
+    background-color: var(--white-bg);
+  }
+
+  &-gray {
+    background-color: var(--gray-bg);
+  }
+}

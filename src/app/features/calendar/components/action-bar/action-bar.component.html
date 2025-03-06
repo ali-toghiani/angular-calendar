@@ -1,0 +1,34 @@
+<header class="calendar-header">
+    <div class="header-utility">
+
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-icon svgIcon="calendar" class="calendar-icon"></mat-icon>
+
+        <div class="header-utility-text">Calendar</div>
+    </div>
+    <div class="header-navigation">
+        <button mat-stroked-button
+         class="header-navigation-button"
+         (click)="goToToday()">
+         Today
+        </button>
+
+        <div class="navigation-arrow-container">
+            <button mat-icon-button (click)="goToPreviousDay()">
+                <mat-icon class="navigation-arrow">arrow_back_ios</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="goToNextDay()">
+                <mat-icon class="navigation-arrow">arrow_forward_ios</mat-icon>
+            </button>
+            
+        </div>
+
+        <div class="date-display">
+            {{ date() | date:'MMMM d, yyyy' }}
+        </div>
+    </div>
+</header>

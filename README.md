@@ -1,60 +1,77 @@
-# Google Calendar Angular Clone
-![payever-calendar](https://github.com/user-attachments/assets/c0e4bd33-c798-4f77-964a-3f608e84d893)
+# Calendar Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+A modern, responsive calendar application built with Angular, featuring drag-and-drop appointment management and a clean, intuitive interface.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- 📅 Day view calendar with 15-minute interval slots
+- ✏️ Create, edit, and delete appointments
+- 🎯 Drag & drop appointment rescheduling
+- 🚫 Smart conflict detection to prevent double-booking
+- 📱 Responsive design that works on all devices
+- 🎨 Clean, modern UI using Angular Material
 
-```bash
-ng serve
+## Technical Highlights
+
+- Built with Angular 19 and TypeScript
+- Uses Angular Material for UI components
+- Implements Angular CDK for drag & drop functionality
+- Features reactive state management with Signals
+- Follows modern Angular best practices:
+  - Standalone components
+  - Lazy loading
+  - Dependency injection
+  - Custom form validators
+  - RXJS usage
+  - Type safety
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── features/
+│   │   └── calendar/         # Main calendar feature
+│   │       ├── components/   # Reusable calendar components
+│   │       └── features/     # Sub-features (day view, etc.)
+│   ├── services/            # Application services
+│   ├── models/             # TypeScript interfaces
+│   └── enums/              # TypeScript enums
+└── assets/                # Static assets
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2. Start the development server:
+   ```bash
+   npm start
+   ```
 
-```bash
-ng generate component component-name
-```
+3. Open your browser and navigate to `http://localhost:4200`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development Decisions
 
-```bash
-ng generate --help
-```
+- Used Angular Material and CDK to ensure consistent UI and robust drag & drop
+- Implemented standalone components for better tree-shaking
+- Used signals for state management to reduce complexity
+- Added custom validators for appointment conflicts
+- Structured the app for scalability with feature modules
+- Focused on maintainable, well-documented code
 
-## Building
+## Future Improvements
 
-To build the project run:
+- Add week and month views
+- Implement recurring appointments
+- Add appointment categories and colors
+- Include search functionality
+- Add unit and e2e tests
+- Implement appointment reminders
 
-```bash
-ng build
-```
+## Notes
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project was developed as part of a technical assessment. While it meets all requirements, there's always room for improvement and additional features. Feel free to explore the code and suggest improvements!
