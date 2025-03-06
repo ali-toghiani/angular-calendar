@@ -1,5 +1,7 @@
 # Calendar Application
 
+![Calendar Application Preview](src/assets/images/angular-calendar-preview.png)
+
 A modern, responsive calendar application built with Angular, featuring drag-and-drop appointment management and a clean, intuitive interface.
 
 ## Features
@@ -10,6 +12,8 @@ A modern, responsive calendar application built with Angular, featuring drag-and
 - 🚫 Smart conflict detection to prevent double-booking
 - 📱 Responsive design that works on all devices
 - 🎨 Clean, modern UI using Angular Material
+
+![Appointment Creation Modal](src/assets/images/angular-calendar-appointment-modal.png)
 
 ## Technical Highlights
 
