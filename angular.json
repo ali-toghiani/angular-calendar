@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "payever-calendar": {
+    "angular-calendar": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/payever-calendar",
+            "outputPath": "dist/angular-calendar",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "payever-calendar:build:production"
+              "buildTarget": "angular-calendar:build:production"
             },
             "development": {
-              "buildTarget": "payever-calendar:build:development"
+              "buildTarget": "angular-calendar:build:development"
             }
           },
           "defaultConfiguration": "development"
