@@ -4,6 +4,8 @@
 
 A modern, responsive calendar application built with Angular, featuring drag-and-drop appointment management and a clean, intuitive interface.
 
+**[View Live Demo](https://ali-toghiani.github.io/angular-calendar/)**
+
 ## Features
 
 - 📅 Day view calendar with 15-minute interval slots
@@ -57,6 +59,30 @@ src/
    ```
 
 3. Open your browser and navigate to `http://localhost:4200`
+
+## Deployment
+
+This application is configured for deployment to GitHub Pages.
+
+### Automatic Deployment
+
+The project includes a GitHub Actions workflow that automatically deploys to GitHub Pages when changes are pushed to the main branch.
+
+### Manual Deployment
+
+To deploy manually:
+
+1. Build the application with GitHub Pages configuration:
+   ```bash
+   npm run build -- --configuration=github-pages
+   ```
+
+2. Deploy using the angular-cli-ghpages tool:
+   ```bash
+   npm run deploy
+   ```
+
+After deployment, the application will be available at: `https://yourusername.github.io/angular-calendar/`
 
 ## Development Decisions
 
