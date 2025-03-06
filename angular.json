@@ -28,10 +28,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/404.html",
               {
-                "glob": "**/*",
-                "input": "src/assets/icons",
-                "output": "/assets/icons"
+                "glob": "**/*.svg",
+                "input": "src/assets/images",
+                "output": "/assets/images"
               }
             ],
             "styles": [
@@ -59,6 +60,29 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "github-pages": {
+              "baseHref": "/angular-calendar/",
+              "deployUrl": "/angular-calendar/",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -99,6 +123,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

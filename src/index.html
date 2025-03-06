@@ -5,9 +5,50 @@
   <title>Angular Calendar</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- SVG favicon with multiple formats for browser compatibility -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/google-calendar.svg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+  <link rel="alternate icon" href="favicon.ico">
+  
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- GitHub Pages SPA redirect script -->
+  <script type="text/javascript">
+    // This script ensures assets load correctly on GitHub Pages
+    (function() {
+      // Check if we're running on GitHub Pages (generic check)
+      if (window.location.hostname.indexOf('github.io') !== -1) {
+        // Get the base URL from the script's src attribute
+        var scripts = document.getElementsByTagName('script');
+        var lastScript = scripts[scripts.length - 1];
+        var scriptUrl = new URL(lastScript.src);
+        var baseUrl = scriptUrl.origin + scriptUrl.pathname.substring(0, scriptUrl.pathname.lastIndexOf('/') + 1);
+        
+        // Override Angular's resource loading
+        window.__resourceBase = baseUrl;
+      }
+    })();
+  </script>
+
+  <!-- GitHub Pages SPA redirect script -->
+  <script type="text/javascript">
+    // This script checks to see if a redirect is present in the query string,
+    // converts it back into the correct URL and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to attempt to load the new URL.
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) { 
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>
